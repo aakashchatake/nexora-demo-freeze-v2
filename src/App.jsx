@@ -1,5 +1,6 @@
 import React from 'react';
 import { HashRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import AccessGateway from './pages/AccessGateway';
 import PlatformGateway from './pages/PlatformGateway';
 import SignUp from './pages/SignUp';
 import VerifyEmail from './pages/VerifyEmail';
@@ -17,6 +18,7 @@ import ProtectedRoute from './components/ProtectedRoute';
  * 
  * Main React application entry point.
  * Routes:
+ * - /access - Institutional Gateway (verify institute ID)
  * - /platform - Institutional Platform Gateway (login page)
  * - /demo-design - Design System Demo (visual showcase)
  * - /dashboard - Interactive Institute Dashboard (post-login)
@@ -32,6 +34,7 @@ function App() {
       <div className="App">
         <Routes>
           {/* Public Routes */}
+          <Route path="/access" element={<AccessGateway />} />
           <Route path="/platform" element={<PlatformGateway />} />
           <Route path="/signup" element={<SignUp />} />
           <Route path="/verify-email" element={<VerifyEmail />} />

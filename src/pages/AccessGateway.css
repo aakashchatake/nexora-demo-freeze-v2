@@ -1,0 +1,342 @@
+/* ============================================
+   ACCESS GATEWAY - PREMIUM DARK THEME
+   ============================================ */
+
+.access-gateway {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #0a0e27 0%, #1a1f3a 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+
+.access-gateway-container {
+  width: 100%;
+  max-width: 480px;
+}
+
+/* ============================================
+   HEADER
+   ============================================ */
+
+.access-gateway-header {
+  text-align: center;
+  margin-bottom: 2.5rem;
+}
+
+.access-gateway-brand {
+  font-size: 2.5rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin: 0 0 1.5rem 0;
+}
+
+.access-gateway-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #e0e7ff;
+  margin: 0 0 0.5rem 0;
+  letter-spacing: -0.02em;
+}
+
+.access-gateway-subtitle {
+  font-size: 1rem;
+  color: #94a3b8;
+  margin: 0;
+  font-weight: 400;
+}
+
+/* ============================================
+   CARD
+   ============================================ */
+
+.access-gateway-card {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  padding: 2.5rem;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+}
+
+/* ============================================
+   FORM
+   ============================================ */
+
+.access-gateway-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.access-gateway-input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.access-gateway-label {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #cbd5e1;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.access-gateway-input {
+  padding: 0.875rem 1rem;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 8px;
+  color: #f1f5f9;
+  font-size: 1.125rem;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  transition: all 0.2s ease;
+}
+
+.access-gateway-input:focus {
+  outline: none;
+  background: rgba(255, 255, 255, 0.12);
+  border-color: #667eea;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.2);
+}
+
+.access-gateway-input::placeholder {
+  color: #64748b;
+  text-transform: none;
+}
+
+/* ============================================
+   ERROR STATE
+   ============================================ */
+
+.access-gateway-error {
+  background: rgba(239, 68, 68, 0.1);
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  border-radius: 8px;
+  padding: 1rem;
+  display: flex;
+  gap: 0.75rem;
+}
+
+.access-gateway-error-icon {
+  font-size: 1.25rem;
+  flex-shrink: 0;
+}
+
+.access-gateway-error-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.access-gateway-error-text {
+  color: #fca5a5;
+  font-size: 0.875rem;
+  margin: 0;
+  line-height: 1.5;
+}
+
+.access-gateway-error-link {
+  color: #fbbf24;
+  font-size: 0.875rem;
+  text-decoration: none;
+  font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  transition: color 0.2s ease;
+}
+
+.access-gateway-error-link:hover {
+  color: #fde047;
+}
+
+/* ============================================
+   BUTTONS
+   ============================================ */
+
+.access-gateway-button {
+  padding: 0.875rem 1.5rem;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.access-gateway-button.primary {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+}
+
+.access-gateway-button.primary:hover:not(:disabled) {
+  transform: translateY(-1px);
+  box-shadow: 0 10px 20px -5px rgba(102, 126, 234, 0.4);
+}
+
+.access-gateway-button.primary:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.access-gateway-button.primary.large {
+  padding: 1.125rem 2rem;
+  font-size: 1.125rem;
+}
+
+.access-gateway-button.secondary {
+  background: rgba(255, 255, 255, 0.08);
+  color: #cbd5e1;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  margin-top: 0.5rem;
+}
+
+.access-gateway-button.secondary:hover {
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.access-gateway-spinner {
+  width: 16px;
+  height: 16px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-top-color: white;
+  border-radius: 50%;
+  animation: spin 0.6s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* ============================================
+   VERIFIED STATE
+   ============================================ */
+
+.access-gateway-verified {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.access-gateway-verified-icon {
+  width: 64px;
+  height: 64px;
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 2rem;
+  font-weight: bold;
+  margin: 0 auto;
+  box-shadow: 0 10px 30px -5px rgba(16, 185, 129, 0.4);
+}
+
+.access-gateway-verified-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #e0e7ff;
+  margin: 0;
+}
+
+.access-gateway-verified-info {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 8px;
+  padding: 1.5rem;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.access-gateway-verified-name {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #f1f5f9;
+  margin: 0 0 0.5rem 0;
+}
+
+.access-gateway-verified-id {
+  font-size: 0.875rem;
+  color: #94a3b8;
+  margin: 0 0 0.25rem 0;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.access-gateway-verified-type {
+  font-size: 0.875rem;
+  color: #cbd5e1;
+  margin: 0;
+}
+
+/* ============================================
+   FOOTER
+   ============================================ */
+
+.access-gateway-footer {
+  text-align: center;
+  margin-top: 2.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.access-gateway-footer p {
+  margin: 0.25rem 0;
+  font-size: 0.75rem;
+  color: #64748b;
+}
+
+.access-gateway-footer-powered {
+  font-weight: 500;
+  color: #94a3b8;
+}
+
+.access-gateway-footer-copyright {
+  color: #475569;
+}
+
+.access-gateway-footer-encrypted {
+  color: #64748b;
+  opacity: 0.7;
+}
+
+/* ============================================
+   RESPONSIVE
+   ============================================ */
+
+@media (max-width: 640px) {
+  .access-gateway {
+    padding: 1.5rem;
+  }
+
+  .access-gateway-brand {
+    font-size: 2rem;
+  }
+
+  .access-gateway-title {
+    font-size: 1.25rem;
+  }
+
+  .access-gateway-card {
+    padding: 1.5rem;
+  }
+
+  .access-gateway-verified-name {
+    font-size: 1.125rem;
+  }
+}

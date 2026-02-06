@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { LayoutDashboard, Users, CheckCircle2, BarChart3, Settings, Menu, ChevronLeft, ChevronRight, LogOut } from 'lucide-react';
 import { supabase } from '../lib/supabaseClient';
+import useInstitute from '../hooks/useInstitute';
 import './InstituteLayout.css';
 
 export default function InstituteLayout({ children }) {
@@ -9,15 +10,22 @@ export default function InstituteLayout({ children }) {
   const location = useLocation();
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [institutionName, setInstitutionName] = useState('NEXORA');
   const [userFullName, setUserFullName] = useState('User');
   const [userRole, setUserRole] = useState('User');
+  
+  // Institute context management
+  const { instituteId, instituteName, loading: instituteLoading, error: instituteError, clearInstitute } = useInstitute();
 
   useEffect(() => {
-    // Get institution info from localStorage
-    const instName = localStorage.getItem('nexora_institution_name') || 'NEXORA';
+    // Redirect to access gateway if no institute context
+    if (!instituteLoading && !instituteId) {
+      navigate('/access');
+    }
+  }, [instituteId, instituteLoading, navigate]);
+
+  useEffect(() => {
+    // Get user info from localStorage
     const fullName = localStorage.getItem('nexora_full_name') || 'User';
-    setInstitutionName(instName);
     setUserFullName(fullName);
     setUserRole('Admin');
   }, []);
@@ -41,10 +49,10 @@ export default function InstituteLayout({ children }) {
   const handleLogout = async () => {
     try {
       await supabase.auth.signOut();
+      clearInstitute(); // Clear institute context
       localStorage.removeItem('nexora_institution_name');
       localStorage.removeItem('nexora_full_name');
       localStorage.removeItem('nexora_email');
-      localStorage.removeItem('nexora_institute_id');
       navigate('/platform');
     } catch (error) {
       console.error('Logout error:', error);
@@ -56,26 +64,23 @@ export default function InstituteLayout({ children }) {
     ? userFullName.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2)
     : 'A';
 
-  // Format institution name with proper title case
-  const formatInstitutionName = (name) => {
-    if (!name) return 'NEXORA';
-    // Words that should stay lowercase in title case
-    const lowercaseWords = ['of', 'and', 'the', 'in', 'on', 'at', 'to', 'for', 'a', 'an'];
-    
-    const words = name.toLowerCase().split(' ');
-    return words.map((word, index) => {
-      // Always capitalize first and last word
-      if (index === 0 || index === words.length - 1) {
-        return word.charAt(0).toUpperCase() + word.slice(1);
-      }
-      // Keep small words lowercase
-      if (lowercaseWords.includes(word)) {
-        return word;
-      }
-      // Capitalize other words
-      return word.charAt(0).toUpperCase() + word.slice(1);
-    }).join(' ');
-  };
+  // Show loading state
+  if (instituteLoading) {
+    return (
+      <div className="institute-layout" style={{display: 'flex', alignItems: 'center', justifyContent: 'center', minHeight: '100vh'}}>
+        <div>Loading institute context...</div>
+      </div>
+    );
+  }
+
+  // Show error state (shouldn't happen due to redirect, but good fallback)
+  if (instituteError && !instituteId) {
+    return (
+      <div className="institute-layout" style={{display: 'flex', alignItems: 'center', justifyContent: 'center', minHeight: '100vh'}}>
+        <div>Institute context required. Redirecting...</div>
+      </div>
+    );
+  }
 
   return (
     <div className="institute-layout">
@@ -96,7 +101,8 @@ export default function InstituteLayout({ children }) {
             <span>|</span>
           </div>
           <div className="institute-name">
-            <span className="institute-name-text">{formatInstitutionName(institutionName)}</span>
+            <span className="institute-name-text">{instituteName || 'Institute'}</span>
+            {instituteId && <span className="institute-id-subtitle" style={{fontSize: '0.75rem', opacity: 0.7, marginLeft: '0.5rem'}}>ID: {instituteId}</span>}
           </div>
         </div>
 

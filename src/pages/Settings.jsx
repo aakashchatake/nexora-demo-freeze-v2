@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import { useAuth } from '../hooks/useAuth';
+import useInstitute from '../hooks/useInstitute';
 import { supabase } from '../lib/supabaseClient';
 import { useNavigate } from 'react-router-dom';
 import './Settings.css';
 
 export default function Settings() {
   const { user } = useAuth();
+  const { instituteId, instituteName, institutionType } = useInstitute();
   const navigate = useNavigate();
   const [notificationsEnabled, setNotificationsEnabled] = useState(true);
   const [emailOnAttendance, setEmailOnAttendance] = useState(true);
@@ -135,22 +137,21 @@ export default function Settings() {
             <div className="setting-row">
               <div>
                 <p className="setting-title">Institution Name</p>
-                <p className="setting-value">{user?.institutionName || 'Not specified'}</p>
-                <p className="nx-text-muted nx-text-sm">To update institution details, please contact support</p>
+                <p className="setting-value">{instituteName || 'Not specified'}</p>
               </div>
             </div>
 
             <div className="setting-row">
               <div>
                 <p className="setting-title">Institution ID</p>
-                <p className="setting-value">{user?.instituteId || 'Not specified'}</p>
+                <p className="setting-value" style={{fontFamily: 'monospace', fontWeight: '600'}}>{instituteId || 'Not specified'}</p>
               </div>
             </div>
 
             <div className="setting-row">
               <div>
                 <p className="setting-title">Institution Type</p>
-                <p className="setting-value">{user?.institutionType || 'Not specified'}</p>
+                <p className="setting-value">{institutionType || 'Not specified'}</p>
               </div>
             </div>
 
@@ -178,6 +179,36 @@ export default function Settings() {
             <div className="setting-row" style={{ borderTop: '1px solid var(--nx-border-light)', paddingTop: 'var(--nx-space-lg)', marginTop: 'var(--nx-space-lg)' }}>
               <button className="nx-btn nx-btn-secondary">Change Password</button>
               <button className="nx-btn nx-btn-secondary" onClick={handleLogout}>Logout</button>
+            </div>
+          </div>
+        </div>
+
+        {/* Institution Governance */}
+        <div className="nx-card nx-mb-lg">
+          <div className="nx-card-header">
+            <h3>Institution Governance</h3>
+          </div>
+          <div className="nx-card-body">
+            <div className="governance-info">
+              <p className="nx-mb-md" style={{lineHeight: '1.6'}}>
+                Certain institutional details are governed by Nexora for audit, compliance, and billing integrity. 
+                Changes to institutional name, ID, or type require administrative approval through our support team.
+              </p>
+              
+              <a
+                href={`mailto:nexora@chatakeinnoworks.com?subject=${encodeURIComponent(`Institution Detail Change Request - ${instituteId || 'N/A'}`)}&body=${encodeURIComponent(`Institution ID: ${instituteId || 'N/A'}\nInstitution Name: ${instituteName || 'N/A'}\nRequester Email: ${user?.email || 'N/A'}\n\nChange Request Details:\n[Please describe the changes you need]\n`)}`}
+                className="nx-btn nx-btn-secondary"
+                style={{display: 'inline-block'}}
+              >
+                Request Institutional Change
+              </a>
+
+              <p className="nx-text-muted nx-text-sm nx-mt-md">
+                For urgent issues or escalation, contact{' '}
+                <a href="mailto:admin@chatakeinnoworks.com" className="support-link">
+                  admin@chatakeinnoworks.com
+                </a>
+              </p>
             </div>
           </div>
         </div>

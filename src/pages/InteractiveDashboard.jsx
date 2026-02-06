@@ -1,12 +1,16 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { courses } from '../data/courses';
 import { getAttendanceForCourse, getAttendanceSummary } from '../data/attendance';
 import { getResultsForCourse } from '../data/results';
 import { useAuth } from '../hooks/useAuth';
+import useInstitute from '../hooks/useInstitute';
 import './InteractiveDashboard.css';
 
 export default function InteractiveDashboard() {
   const { user } = useAuth();
+  const navigate = useNavigate();
+  const { instituteId, instituteName, institutionType } = useInstitute();
   
   // State management for interactions
   const [selectedCourse, setSelectedCourse] = useState(courses[0].id);
@@ -55,38 +59,113 @@ export default function InteractiveDashboard() {
     }
   };
 
-  // Format institution name with proper title case
-  const formatInstitutionName = (name) => {
-    if (!name) return 'Dashboard';
-    // Words that should stay lowercase in title case
-    const lowercaseWords = ['of', 'and', 'the', 'in', 'on', 'at', 'to', 'for', 'a', 'an'];
-    
-    const words = name.toLowerCase().split(' ');
-    return words.map((word, index) => {
-      // Always capitalize first and last word
-      if (index === 0 || index === words.length - 1) {
-        return word.charAt(0).toUpperCase() + word.slice(1);
-      }
-      // Keep small words lowercase
-      if (lowercaseWords.includes(word)) {
-        return word;
-      }
-      // Capitalize other words
-      return word.charAt(0).toUpperCase() + word.slice(1);
-    }).join(' ');
+  // Quick action handlers
+  const handleQuickAction = (path) => {
+    navigate(path);
   };
 
   return (
     <div className="interactive-dashboard">
-      {/* Header Section - Shows institution and user info */}
-      <div className="dashboard-header nx-mb-lg">
-        <div>
-          <h1 className="nx-mb-sm">
-            {formatInstitutionName(user?.institutionName) || 'Dashboard'}
+      {/* Premium Hero Section */}
+      <div className="dashboard-hero nx-mb-lg">
+        <div className="hero-title-section">
+          <h1 className="hero-institute-name" style={{
+            fontSize: '2.5rem',
+            fontWeight: '700',
+            marginBottom: '0.5rem',
+            color: '#1e293b',
+            letterSpacing: '-0.02em'
+          }}>
+            {instituteName || 'Institute Dashboard'}
           </h1>
-          <p className="nx-text-muted">
-            Welcome, {user?.fullName || 'Administrator'} • {user?.institutionType || 'Institution'} • {user?.email}
+          <p className="hero-subtitle" style={{
+            fontSize: '1.25rem',
+            color: '#64748b',
+            fontWeight: '500',
+            marginBottom: '0.75rem'
+          }}>
+            Academic Command Center
           </p>
+          <div className="hero-meta" style={{
+            fontSize: '0.875rem',
+            color: '#94a3b8',
+            display: 'flex',
+            alignItems: 'center',
+            gap: '1rem',
+            flexWrap: 'wrap'
+          }}>
+            {instituteId && <span>Institute ID: <strong>{instituteId}</strong></span>}
+            <span>•</span>
+            <span>Role: <strong>Administrator</strong></span>
+            <span>•</span>
+            <span>Academic Year: <strong>2025–26</strong></span>
+          </div>
+        </div>
+
+        {/* Quick Actions */}
+        <div className="hero-quick-actions" style={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
+          gap: '1rem',
+          marginTop: '2rem'
+        }}>
+          <button
+            onClick={() => handleQuickAction('/students')}
+            className="quick-action-btn"
+            style={{
+              padding: '1rem 1.5rem',
+              background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+              color: 'white',
+              border: 'none',
+              borderRadius: '8px',
+              fontWeight: '600',
+              cursor: 'pointer',
+              transition: 'transform 0.2s',
+              boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)'
+            }}
+            onMouseOver={(e) => e.currentTarget.style.transform = 'translateY(-2px)'}
+            onMouseOut={(e) => e.currentTarget.style.transform = 'translateY(0)'}
+          >
+            + Add Student
+          </button>
+          <button
+            onClick={() => handleQuickAction('/attendance')}
+            className="quick-action-btn"
+            style={{
+              padding: '1rem 1.5rem',
+              background: 'linear-gradient(135deg, #10b981 0%, #059669 100%)',
+              color: 'white',
+              border: 'none',
+              borderRadius: '8px',
+              fontWeight: '600',
+              cursor: 'pointer',
+              transition: 'transform 0.2s',
+              boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)'
+            }}
+            onMouseOver={(e) => e.currentTarget.style.transform = 'translateY(-2px)'}
+            onMouseOut={(e) => e.currentTarget.style.transform = 'translateY(0)'}
+          >
+            ✓ Mark Attendance
+          </button>
+          <button
+            onClick={() => handleQuickAction('/results')}
+            className="quick-action-btn"
+            style={{
+              padding: '1rem 1.5rem',
+              background: 'linear-gradient(135deg, #f59e0b 0%, #d97706 100%)',
+              color: 'white',
+              border: 'none',
+              borderRadius: '8px',
+              fontWeight: '600',
+              cursor: 'pointer',
+              transition: 'transform 0.2s',
+              boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)'
+            }}
+            onMouseOver={(e) => e.currentTarget.style.transform = 'translateY(-2px)'}
+            onMouseOut={(e) => e.currentTarget.style.transform = 'translateY(0)'}
+          >
+            📊 Publish Results
+          </button>
         </div>
       </div>
 
